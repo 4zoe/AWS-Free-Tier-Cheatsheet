@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The "Free Shit" from Jeff - AWS Free Tier</title>
+    <style>
+        :root {
+            --aws-orange: #ff9900;
+            --aws-dark: #232f3e;
+            --bg: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 40px;
+        }
+
+        h1 { color: var(--aws-orange); margin-bottom: 10px; }
+        p.subtitle { opacity: 0.8; font-style: italic; }
+
+        .filter-buttons {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        button {
+            background: var(--aws-dark);
+            color: white;
+            border: 1px solid var(--aws-orange);
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        button:hover, button.active {
+            background: var(--aws-orange);
+            color: var(--aws-dark);
+            font-weight: bold;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--aws-orange);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .card h3 { margin-top: 0; color: #fff; }
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .always { background: #28a745; color: white; }
+        .twelve { background: #007bff; color: white; }
+        .trial { background: #dc3545; color: white; }
+
+        .limit-box {
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            border: 1px dashed #555;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>AWS Free Tier Cheatsheet</h1>
+    <p class="subtitle">A comprehensive list of what Jeff is offering and the limits.</p>
+</header>
+
+<div class="filter-buttons">
+    <button onclick="filterSelection('all')" class="active">Show All</button>
+    <button onclick="filterSelection('always')">Always Free</button>
+    <button onclick="filterSelection('twelve')">12 Months Free</button>
+    <button onclick="filterSelection('trial')">Trials</button>
+</div>
+
+<div class="grid" id="serviceGrid">
+    <div class="card twelve">
+        <span class="tag twelve">12 Months Free</span>
+        <h3>Amazon EC2</h3>
+        <p>Virtual Servers in the Cloud</p>
+        <div class="limit-box">750 hrs/mo (t2.micro/t3.micro)</div>
+    </div>
+
+    <div class="card twelve">
+        <span class="tag twelve">12 Months Free</span>
+        <h3>Amazon S3</h3>
+        <p>Scalable Storage in the Cloud</p>
+        <div class="limit-box">5 GB Standard Storage</div>
+    </div>
+
+    <div class="card always">
+        <span class="tag always">Always Free</span>
+        <h3>AWS Lambda</h3>
+        <p>Serverless Compute</p>
+        <div class="limit-box">1 Million requests per month</div>
+    </div>
+
+    <div class="card always">
+        <span class="tag always">Always Free</span>
+        <h3>Amazon DynamoDB</h3>
+        <p>NoSQL Database</p>
+        <div class="limit-box">25 GB Storage</div>
+    </div>
+
+    <div class="card always">
+        <span class="tag always">Always Free</span>
+        <h3>CloudFront</h3>
+        <p>Content Delivery Network (CDN)</p>
+        <div class="limit-box">1 TB Data Transfer Out</div>
+    </div>
+
+    <div class="card trial">
+        <span class="tag trial">Trial</span>
+        <h3>Amazon SageMaker</h3>
+        <p>Machine Learning</p>
+        <div class="limit-box">2 Months (250 hrs/mo)</div>
+    </div>
+
+    <div class="card trial">
+        <span class="tag trial">Trial</span>
+        <h3>Amazon Lightsail</h3>
+        <p>Simple VPS</p>
+        <div class="limit-box">1 Month (750 hours)</div>
+    </div>
+
+    <div class="card always">
+        <span class="tag always">Always Free</span>
+        <h3>Amazon SES</h3>
+        <p>Email Sending Service</p>
+        <div class="limit-box">62,000 messages/mo</div>
+    </div>
+</div>
+
+<script>
+    function filterSelection(c) {
+        var x, i;
+        x = document.getElementsByClassName("card");
+        if (c == "all") c = "";
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+            if (x[i].className.indexOf(c) > -1) {
+                x[i].style.display = "block";
+            }
+        }
+        
+        // Update button state
+        var btns = document.getElementsByTagName("button");
+        for (var j = 0; j < btns.length; j++) {
+            btns[j].classList.remove("active");
+            if(btns[j].innerText.toLowerCase().includes(c) || (c == "" && btns[j].innerText == "Show All")) {
+                btns[j].classList.add("active");
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
